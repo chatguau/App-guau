@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guau - Gestión Veterinaria</title>
+    <meta name="description" content="Guau - Gestión Veterinaria Integral">
+    <link rel="stylesheet" href="css/tokens.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img src="logo.png" alt="Guau Logo" class="logo-img">
+                    <span class="logo-text">Guau</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item active" data-page="dashboard">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Dashboard</span>
+                </a>
+
+                <div class="nav-section">Datos Paciente</div>
+
+                <a href="#patients" class="nav-item" data-page="patients">
+                    <span class="nav-icon">🐾</span>
+                    <span class="nav-text">Pacientes</span>
+                    <span class="nav-chevron">›</span>
+                </a>
+
+                <a href="#consultations" class="nav-item" data-page="consultations">
+                    <span class="nav-icon">🩺</span>
+                    <span class="nav-text">Consultas</span>
+                    <span class="nav-chevron">›</span>
+                </a>
+
+                <a href="#prescriptions" class="nav-item" data-page="prescriptions">
+                    <span class="nav-icon">💊</span>
+                    <span class="nav-text">Recetas Médicas</span>
+                    <span class="nav-chevron">›</span>
+                </a>
+
+                <a href="#surgeries" class="nav-item" data-page="surgeries">
+                    <span class="nav-icon">🔪</span>
+                    <span class="nav-text">Cirugías</span>
+                    <span class="nav-chevron">›</span>
+                </a>
+
+                <a href="#hospitalization" class="nav-item" data-page="hospitalization">
+                    <span class="nav-icon">🏥</span>
+                    <span class="nav-text">Hospitalización</span>
+                    <span class="nav-chevron">›</span>
+                </a>
+
+                <a href="#vaccinations" class="nav-item" data-page="vaccinations">
+                    <span class="nav-icon">💉</span>
+                    <span class="nav-text">Vacunación</span>
+                    <span class="nav-chevron">›</span>
+                </a>
+
+                <a href="#deworming" class="nav-item" data-page="deworming">
+                    <span class="nav-icon">💊</span>
+                    <span class="nav-text">Desparasitación</span>
+                    <span class="nav-chevron">›</span>
+                </a>
+
+                <a href="#reports" class="nav-item" data-page="reports">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-text">Reportes</span>
+                    <span class="nav-chevron">›</span>
+                </a>
+
+                <a href="#authorizations" class="nav-item" data-page="authorizations">
+                    <span class="nav-icon">📝</span>
+                    <span class="nav-text">Autorizaciones</span>
+                    <span class="nav-chevron">›</span>
+                </a>
+
+                <div class="nav-section">Configuración</div>
+
+                <a href="#settings" class="nav-item" data-page="settings">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-text">Ajustes</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <button class="menu-toggle" id="menuToggle">☰</button>
+                <h1 class="page-title" id="pageTitle">Dashboard</h1>
+                <div class="header-right">
+                    <div class="user-profile">
+                        <div class="user-avatar">
+                            <img src="https://ui-avatars.com/api/?name=Dr+Nanda&background=2563eb&color=fff"
+                                alt="Avatar">
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">Dr. Nanda Bagus Pratmoko</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="page-content" id="pageContent">
+                <!-- Dashboard Page (default) -->
+                <div class="page" id="page-dashboard">
+                    <!-- Se carga dinámicamente -->
+                </div>
+
+                <!-- Patients Page -->
+                <div class="page hidden" id="page-patients">
+                    <!-- Se carga dinámicamente -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="js/supabase.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/pages/dashboard.js"></script>
+    <script src="js/pages/patients.js"></script>
+    <script src="js/pages/consultations.js"></script>
+    <script src="js/pages/prescriptions.js"></script>
+    <script src="js/pages/vaccinations.js"></script>
+    <script src="js/pages/records.js"></script>
+    <script src="js/pages/hospitalization.js"></script>
+    <script src="js/pages/deworming.js"></script>
+    <script src="js/pages/reports.js"></script>
+    <script src="js/pages/authorizations.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>
