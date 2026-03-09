@@ -396,15 +396,6 @@ const ReportsPage = {
                             <select id="vacFilterVet" class="input">
                                 <option value="">Todos los veterinarios</option>
                                 \${vetOptionsHtml}
-Viewed reports.js:401-600
-
-Sharing the fixed [reports.js](cci:7://file:///c:/Users/fainm/Desktop/Fain%20asus/app%20historia/js/pages/reports.js:0:0-0:0) file with the user in parts as requested.
-
-**Parte 3 (Líneas 401 a 600)**. 
-
-Pégalo justo donde termina la parte anterior. Dime "Siguiente" para la parte 4.
-
-```javascript
                             </select>
                         </div>
                     </div>
@@ -1473,3 +1464,4 @@ Pégalo debajo de la parte anterior. Con esto terminas de reemplazar todo el arc
         // No hay eventos especiales necesarios
     }
 };
+
