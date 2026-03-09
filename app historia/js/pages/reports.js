@@ -180,6 +180,9 @@ const ReportsPage = {
                         </div>
                     </div>
 
+
+
+
                 </div>
             </div>
             
@@ -195,7 +198,6 @@ const ReportsPage = {
                             <div class="form-group">
                                 <label class="label">Registrado Desde</label>
                                 <input type="date" id="patFilterDateStart" class="input">
-
                             </div>
                             <div class="form-group">
                                 <label class="label">Hasta</label>
@@ -332,7 +334,7 @@ const ReportsPage = {
                             <label class="label">Veterinario</label>
                             <select id="filterVet" class="input">
                                 <option value="">Todos los veterinarios</option>
-                                \${vetOptionsHtml}
+                                ${vetOptionsHtml}
                             </select>
                         </div>
                     </div>
@@ -395,7 +397,7 @@ const ReportsPage = {
                             <label class="label">Veterinario</label>
                             <select id="vacFilterVet" class="input">
                                 <option value="">Todos los veterinarios</option>
-                                \${vetOptionsHtml}
+                                ${vetOptionsHtml}
                             </select>
                         </div>
                     </div>
@@ -422,7 +424,7 @@ const ReportsPage = {
                             <label class="label">Paciente</label>
                             <select id="histFilterPatient" class="input">
                                 <option value="">-- Seleccionar paciente --</option>
-                                \${patientOptionsHtml}
+                                ${patientOptionsHtml}
                             </select>
                         </div>
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
@@ -442,7 +444,7 @@ const ReportsPage = {
                     </div>
                 </div>
             </div>
-        \`;
+        `;
             
             // Insertar el HTML
             const container = document.querySelector('.reports-page');
@@ -455,7 +457,7 @@ const ReportsPage = {
             console.error('Error cargando reportes:', error);
             const container = document.querySelector('.reports-page');
             if (container) {
-                container.innerHTML = \`<div class="error-state">Error al cargar reportes: \${error.message}</div>\`;
+                container.innerHTML = `<div class="error-state">Error al cargar reportes: ${error.message}</div>`;
             }
         }
     },
@@ -530,22 +532,22 @@ const ReportsPage = {
         };
         const emojis = { canino: '🐕', felino: '🐱' };
 
-        return \`
+        return `
             <div class="species-chart">
-                \${Object.entries(species).map(([key, count]) => {
+                ${Object.entries(species).map(([key, count]) => {
             const percent = Math.round((count / total) * 100);
-            return \`
+            return `
                         <div class="species-bar-container">
-                            <span class="species-label">\${emojis[key] || '🐾'} \${key}</span>
+                            <span class="species-label">${emojis[key] || '🐾'} ${key}</span>
                             <div class="species-bar-wrapper">
-                                <div class="species-bar" style="width: \${percent}%; background: \${colors[key] || 'var(--color-primary)'}"></div>
+                                <div class="species-bar" style="width: ${percent}%; background: ${colors[key] || 'var(--color-primary)'}"></div>
                             </div>
-                            <span class="species-count">\${count} (\${percent}%)</span>
+                            <span class="species-count">${count} (${percent}%)</span>
                         </div>
-                    \`;
+                    `;
         }).join('')}
             </div>
-        \`;
+        `;
     },
 
     /**
@@ -555,14 +557,14 @@ const ReportsPage = {
         const patients = await DataService.getPatients() || [];
         const optionsHtml = await Promise.all(patients.map(async p => {
             const emoji = DataService.getSpeciesEmoji(p.species);
-            return \`<option value="\${p.id}">\${emoji} \${p.name} - \${p.medical_record_number || p.medicalRecordNumber}</option>\`;
+            return `<option value="${p.id}">${emoji} ${p.name} - ${p.medical_record_number || p.medicalRecordNumber}</option>`;
         }));
         return optionsHtml.join('');
     },
 
     async getVeterinarianOptions() {
         const vets = await DataService.getVeterinarians() || [];
-        return vets.map(v => \`<option value="\${v.id}">\${v.full_name || v.name}</option>\`).join('');
+        return vets.map(v => `<option value="${v.id}">${v.full_name || v.name}</option>`).join('');
     },
 
     openConsultationFilters() {
@@ -621,23 +623,23 @@ const ReportsPage = {
         }
 
         // Generate Content
-        let html = \`<h3>Listado de Consultas Filtradas</h3>\`;
+        let html = `<h3>Listado de Consultas Filtradas</h3>`;
         html += '<table style="width:100%; border-collapse: collapse;"><thead><tr style="background:#f1f5f9;"><th style="padding:8px; text-align:left;">Fecha</th><th style="padding:8px; text-align:left;">Paciente</th><th style="padding:8px; text-align:left;">Motivo</th><th style="padding:8px; text-align:left;">Diagnóstico</th><th style="padding:8px; text-align:left;">Veterinario</th></tr></thead><tbody>';
 
         const rows = await Promise.all(filteredConsultations.map(async c => {
             const patient = await DataService.getPatientById(c.patient_id || c.patientId);
             const vet = await DataService.getVeterinarianById(c.veterinarian_id || c.veterinarianId);
-            return \`<tr>
-                <td style="padding:8px; border-bottom:1px solid #eee;">\${DataService.formatDate(c.date || c.created_at)}</td>
-                <td style="padding:8px; border-bottom:1px solid #eee;">\${patient ? patient.name : '-'}</td>
-                <td style="padding:8px; border-bottom:1px solid #eee;">\${c.reason}</td>
-                <td style="padding:8px; border-bottom:1px solid #eee;">\${c.diagnosis || 'No especificado'}</td>
-                <td style="padding:8px; border-bottom:1px solid #eee;">\${vet ? vet.full_name || vet.name : '-'}</td>
-            </tr>\`;
+            return `<tr>
+                <td style="padding:8px; border-bottom:1px solid #eee;">${DataService.formatDate(c.date || c.created_at)}</td>
+                <td style="padding:8px; border-bottom:1px solid #eee;">${patient ? patient.name : '-'}</td>
+                <td style="padding:8px; border-bottom:1px solid #eee;">${c.reason}</td>
+                <td style="padding:8px; border-bottom:1px solid #eee;">${c.diagnosis || 'No especificado'}</td>
+                <td style="padding:8px; border-bottom:1px solid #eee;">${vet ? vet.full_name || vet.name : '-'}</td>
+            </tr>`;
         }));
 
         html += rows.join('') + '</tbody></table>';
-        html += \`<p><strong>Total Registros:</strong> \${filteredConsultations.length}</p>\`;
+        html += `<p><strong>Total Registros:</strong> ${filteredConsultations.length}</p>`;
 
         this.generatePDF('Reporte de Consultas (Personalizado)', html);
         this.closeFilterModal();
@@ -714,7 +716,7 @@ const ReportsPage = {
             let title = 'Reporte de Vacunación';
             if (reportType === 'applied') title += ' - Aplicadas';
             if (reportType === 'upcoming') title += ' - Próximas Dosis';
-            if (species) title += \` (\${species})\`;
+            if (species) title += ` (${species})`;
 
             const contentHtml = await this.generateVaccinationContent(filtered);
             this.generatePDF(title, contentHtml);
@@ -763,7 +765,7 @@ const ReportsPage = {
 
         const optionsHtml = await Promise.all(patients.map(async p => {
             const owner = await DataService.getOwnerById(p.owner_id || p.ownerId);
-            return \`<option value="\${p.id}">\${DataService.getSpeciesEmoji(p.species)} \${p.name} (\${owner?.full_name || owner?.fullName || ''} - \${owner?.document_number || owner?.documentNumber || ''})</option>\`;
+            return `<option value="${p.id}">${DataService.getSpeciesEmoji(p.species)} ${p.name} (${owner?.full_name || owner?.fullName || ''} - ${owner?.document_number || owner?.documentNumber || ''})</option>`;
         }));
 
         select.innerHTML = '<option value="">-- Seleccionar paciente --</option>' + optionsHtml.join('');
@@ -787,7 +789,7 @@ const ReportsPage = {
         const timeline = await this.generateHistoryTimeline(patientId, startDate, endDate);
 
         const contentHtml = await this.generatePatientHistoryContent(patient, timeline);
-        this.generatePDF(\`Historia Clínica - \${patient.name}\`, contentHtml);
+        this.generatePDF(`Historia Clínica - ${patient.name}`, contentHtml);
         this.closeHistoryFilterModal();
     },
 
@@ -882,7 +884,7 @@ const ReportsPage = {
 
         const breeds = DataService.getBreedsBySpecies(species);
         let options = '<option value="">Todas las razas</option>';
-        options += breeds.map(b => \`<option value="\${b}">\${b}</option>\`).join('');
+        options += breeds.map(b => `<option value="${b}">${b}</option>`).join('');
         breedSelect.innerHTML = options;
     },
 
@@ -921,7 +923,7 @@ const ReportsPage = {
         const parts = [];
         if (species) parts.push(species === 'canino' ? 'Caninos' : 'Felinos');
         if (breed) parts.push(breed);
-        if (startDate || endDate) parts.push(\`(\${startDate || 'Inicio'} a \${endDate || 'Hoy'})\`);
+        if (startDate || endDate) parts.push(`(${startDate || 'Inicio'} a ${endDate || 'Hoy'})`);
 
         if (parts.length > 0) title += ' - ' + parts.join(', ');
 
@@ -949,11 +951,11 @@ const ReportsPage = {
     generatePDF(title, content) {
         // Crear ventana de impresión
         const printWindow = window.open('', '_blank');
-        printWindow.document.write(\`
+        printWindow.document.write(`
             <!DOCTYPE html>
             <html>
             <head>
-                <title>\${title} - Guau</title>
+                <title>${title} - Guau</title>
                 <style>
                     body { font-family: Arial, sans-serif; padding: 40px; max-width: 800px; margin: 0 auto; }
                     h1 { color: #2563eb; border-bottom: 2px solid #2563eb; padding-bottom: 10px; }
@@ -974,21 +976,21 @@ const ReportsPage = {
                             <img src="logo.png" alt="Logo" style="width: 60px; height: 60px; object-fit: contain;">
                             <h1>Guau - Clínica Veterinaria</h1>
                         </div>
-                        <h2>\${title}</h2>
+                        <h2>${title}</h2>
                     </div>
                     <div class="date">
-                        <p>Fecha: \${new Date().toLocaleDateString('es-ES')}</p>
-                        <p>Hora: \${new Date().toLocaleTimeString('es-ES')}</p>
+                        <p>Fecha: ${new Date().toLocaleDateString('es-ES')}</p>
+                        <p>Hora: ${new Date().toLocaleTimeString('es-ES')}</p>
                     </div>
                 </div>
-                \${content}
+                ${content}
                 <div class="footer">
                     <p>Generado por Guau - Gestión Veterinaria</p>
                 </div>
                 <button onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
             </body>
             </html>
-        \`);
+        `);
         printWindow.document.close();
     },
 
@@ -1004,10 +1006,10 @@ const ReportsPage = {
         const rows = await Promise.all(patients.map(async p => {
             const owner = await DataService.getOwnerById(p.owner_id || p.ownerId);
             const regDate = p.created_at || p.createdAt ? new Date(p.created_at || p.createdAt).toLocaleDateString() : '-';
-            return \`<tr><td>\${p.medical_record_number || p.medicalRecordNumber}</td><td>\${p.name}</td><td>\${p.species}</td><td>\${p.breed}</td><td>\${owner?.full_name || owner?.fullName || '-'}</td><td>\${regDate}</td></tr>\`;
+            return `<tr><td>${p.medical_record_number || p.medicalRecordNumber}</td><td>${p.name}</td><td>${p.species}</td><td>${p.breed}</td><td>${owner?.full_name || owner?.fullName || '-'}</td><td>${regDate}</td></tr>`;
         }));
         html += rows.join('') + '</tbody></table>';
-        html += \`<p><strong>Total:</strong> \${patients.length} pacientes</p>\`;
+        html += `<p><strong>Total:</strong> ${patients.length} pacientes</p>`;
         return html;
     },
 
@@ -1017,14 +1019,14 @@ const ReportsPage = {
         const rows = await Promise.all(consultations.map(async c => {
             const patient = await DataService.getPatientById(c.patient_id || c.patientId);
             const vet = await DataService.getVeterinarianById(c.veterinarian_id || c.veterinarianId);
-            return \`<tr>
-                <td>\${c.date || c.created_at}</td>
-                <td>\${patient?.name || '-'}</td>
-                <td>\${patient?.species || '-'}</td>
-                <td>\${c.reason}</td>
-                <td>\${c.diagnosis || 'Pendiente'}</td>
-                <td>\${vet?.full_name || vet?.name || '-'}</td>
-            </tr>\`;
+            return `<tr>
+                <td>${c.date || c.created_at}</td>
+                <td>${patient?.name || '-'}</td>
+                <td>${patient?.species || '-'}</td>
+                <td>${c.reason}</td>
+                <td>${c.diagnosis || 'Pendiente'}</td>
+                <td>${vet?.full_name || vet?.name || '-'}</td>
+            </tr>`;
         }));
         html += rows.join('') + '</tbody></table>';
         return html;
@@ -1037,31 +1039,31 @@ const ReportsPage = {
             const patient = await DataService.getPatientById(v.patient_id || v.patientId);
             const vet = await DataService.getVeterinarianById(v.veterinarian_id || v.veterinarianId);
 
-            return \`<tr>
-                <td>\${DataService.formatDate(v.applicationDate || v.date)}</td>
-                <td>\${(v.next_dose_date || v.nextDoseDate) ? DataService.formatDate(v.next_dose_date || v.nextDoseDate) : '-'}</td>
-                <td>\${patient?.name || '-'}</td>
-                <td>\${patient?.species || '-'}</td>
-                <td>\${v.vaccine_name || v.vaccineType || v.vaccineName}</td>
-                <td>\${vet?.full_name || vet?.name || '-'}</td>
-            </tr>\`;
+            return `<tr>
+                <td>${DataService.formatDate(v.applicationDate || v.date)}</td>
+                <td>${(v.next_dose_date || v.nextDoseDate) ? DataService.formatDate(v.next_dose_date || v.nextDoseDate) : '-'}</td>
+                <td>${patient?.name || '-'}</td>
+                <td>${patient?.species || '-'}</td>
+                <td>${v.vaccine_name || v.vaccineType || v.vaccineName}</td>
+                <td>${vet?.full_name || vet?.name || '-'}</td>
+            </tr>`;
         }));
         html += rows.join('') + '</tbody></table>';
-        html += \`<p><strong>Total registros:</strong> \${vaccinations.length}</p>\`;
+        html += `<p><strong>Total registros:</strong> ${vaccinations.length}</p>`;
         return html;
     },
 
     async generatePatientHistoryContent(patient, timeline) {
         const owner = await DataService.getOwnerById(patient.owner_id || patient.ownerId);
 
-        let html = \`
+        let html = `
             <div style="font-family: Arial, sans-serif; color: #333;">
                 
                 <!-- Header del Documento -->
                 <div style="border-bottom: 2px solid #2563eb; padding-bottom: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: start;">
                     <div>
                         <h1 style="color: #2563eb; margin: 0 0 5px 0; font-size: 24px;">HISTORIA CLÍNICA</h1>
-                        <p style="margin: 0; color: #666;">Generado el: \${new Date().toLocaleDateString()}</p>
+                        <p style="margin: 0; color: #666;">Generado el: ${new Date().toLocaleDateString()}</p>
                     </div>
                     <div style="text-align: right;">
                          <h2 style="margin: 0; font-size: 18px;">Clínica Veterinaria</h2>
@@ -1076,23 +1078,23 @@ const ReportsPage = {
                             <td style="vertical-align: top; width: 50%; padding-right: 20px; border-right: 1px solid #cbd5e1;">
                                 <h3 style="margin-top: 0; color: #0f172a; border-bottom: 1px solid #cbd5e1; padding-bottom: 10px;">DATOS DEL PACIENTE</h3>
                                 <table style="width: 100%; font-size: 14px;">
-                                    <tr><td style="color: #64748b; padding: 4px 0;">Nombre:</td><td><strong>\${patient.name}</strong></td></tr>
-                                    <tr><td style="color: #64748b; padding: 4px 0;">Historia Clínica:</td><td><strong>\${patient.medicalRecordNumber}</strong></td></tr>
-                                    <tr><td style="color: #64748b; padding: 4px 0;">Especie/Raza:</td><td>\${patient.species} - \${patient.breed}</td></tr>
-                                    <tr><td style="color: #64748b; padding: 4px 0;">Sexo:</td><td>\${patient.sex}</td></tr>
-                                    <tr><td style="color: #64748b; padding: 4px 0;">Edad:</td><td>\${DataService.calculateAge(patient.birthDate)}</td></tr>
-                                    <tr><td style="color: #64748b; padding: 4px 0;">Peso:</td><td>\${patient.weight || '-'} kg</td></tr>
-                                    <tr><td style="color: #64748b; padding: 4px 0;">Color/Señas:</td><td>\${patient.color || '-'} / \${patient.distinctiveMarks || '-'}</td></tr>
+                                    <tr><td style="color: #64748b; padding: 4px 0;">Nombre:</td><td><strong>${patient.name}</strong></td></tr>
+                                    <tr><td style="color: #64748b; padding: 4px 0;">Historia Clínica:</td><td><strong>${patient.medicalRecordNumber}</strong></td></tr>
+                                    <tr><td style="color: #64748b; padding: 4px 0;">Especie/Raza:</td><td>${patient.species} - ${patient.breed}</td></tr>
+                                    <tr><td style="color: #64748b; padding: 4px 0;">Sexo:</td><td>${patient.sex}</td></tr>
+                                    <tr><td style="color: #64748b; padding: 4px 0;">Edad:</td><td>${DataService.calculateAge(patient.birthDate)}</td></tr>
+                                    <tr><td style="color: #64748b; padding: 4px 0;">Peso:</td><td>${patient.weight || '-'} kg</td></tr>
+                                    <tr><td style="color: #64748b; padding: 4px 0;">Color/Señas:</td><td>${patient.color || '-'} / ${patient.distinctiveMarks || '-'}</td></tr>
                                 </table>
                             </td>
                             <td style="vertical-align: top; width: 50%; padding-left: 20px;">
                                 <h3 style="margin-top: 0; color: #0f172a; border-bottom: 1px solid #cbd5e1; padding-bottom: 10px;">DATOS DEL PROPIETARIO</h3>
                                 <table style="width: 100%; font-size: 14px;">
-                                    <tr><td style="color: #64748b; padding: 4px 0;">Nombre:</td><td><strong>\${owner?.fullName || 'N/A'}</strong></td></tr>
-                                    <tr><td style="color: #64748b; padding: 4px 0;">Identificación:</td><td><strong>\${owner?.documentNumber || 'N/A'}</strong></td></tr>
-                                    <tr><td style="color: #64748b; padding: 4px 0;">Teléfono:</td><td>\${owner?.phone || 'N/A'}</td></tr>
-                                    <tr><td style="color: #64748b; padding: 4px 0;">Email:</td><td>\${owner?.email || 'N/A'}</td></tr>
-                                    <tr><td style="color: #64748b; padding: 4px 0;">Dirección:</td><td>\${owner?.address || 'N/A'}</td></tr>
+                                    <tr><td style="color: #64748b; padding: 4px 0;">Nombre:</td><td><strong>${owner?.fullName || 'N/A'}</strong></td></tr>
+                                    <tr><td style="color: #64748b; padding: 4px 0;">Identificación:</td><td><strong>${owner?.documentNumber || 'N/A'}</strong></td></tr>
+                                    <tr><td style="color: #64748b; padding: 4px 0;">Teléfono:</td><td>${owner?.phone || 'N/A'}</td></tr>
+                                    <tr><td style="color: #64748b; padding: 4px 0;">Email:</td><td>${owner?.email || 'N/A'}</td></tr>
+                                    <tr><td style="color: #64748b; padding: 4px 0;">Dirección:</td><td>${owner?.address || 'N/A'}</td></tr>
                                 </table>
                             </td>
                         </tr>
@@ -1101,7 +1103,7 @@ const ReportsPage = {
 
                 <!-- Línea de Tiempo -->
                 <h3 style="background: #2563eb; color: white; padding: 10px; border-radius: 4px; text-align: center; margin-bottom: 20px;">REGISTRO DE EVENTOS CLÍNICOS</h3>
-        \`;
+        `;
 
         if (timeline.length === 0) {
             html += '<p style="text-align: center; padding: 40px; color: #64748b;">No hay registros clínicos en el período seleccionado.</p>';
@@ -1111,38 +1113,38 @@ const ReportsPage = {
                 const vetName = vet ? vet.full_name || vet.name : 'Veterinario no identificado';
                 const vetTp = vet ? vet.tp || '' : '';
 
-                return \`
+                return `
                     <div style="border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 20px; overflow: hidden; page-break-inside: avoid;">
                         <!-- Encabezado del Evento -->
                         <div style="background: #f1f5f9; padding: 10px 15px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
                             <div>
-                                <span style="font-weight: bold; color: #2563eb; font-size: 16px;">\${item.type}</span>
-                                <span style="margin-left: 10px; color: #64748b;">\${DataService.formatDate(item.date)}</span>
+                                <span style="font-weight: bold; color: #2563eb; font-size: 16px;">${item.type}</span>
+                                <span style="margin-left: 10px; color: #64748b;">${DataService.formatDate(item.date)}</span>
                             </div>
                             <div style="font-size: 13px; text-align: right;">
-                                <strong>\${vetName}</strong><br>
-                                <span style="color: #666;">TP: \${vetTp}</span>
+                                <strong>${vetName}</strong><br>
+                                <span style="color: #666;">TP: ${vetTp}</span>
                             </div>
                         </div>
                         
                         <!-- Cuerpo del Evento -->
                         <div style="padding: 15px;">
-                            \${this.renderTimelineItemBody(item)}
+                            ${this.renderTimelineItemBody(item)}
                         </div>
                     </div>
-                \`;
+                `;
             }));
             
             html += timelineHtml.join('');
         }
 
-        html += \`
+        html += `
             <div style="margin-top: 50px; border-top: 1px solid #ccc; padding-top: 10px; text-align: center; font-size: 12px; color: #999;">
                 <p>Este documento es un resumen de la historia clínica digital. Documento informativo.</p>
                 <p>Clínica Veterinaria Guau - Software de Gestión Veterinaria</p>
             </div>
             </div>
-        \`;
+        `;
 
         return html;
     },
@@ -1150,14 +1152,14 @@ const ReportsPage = {
     renderTimelineItemBody(item) {
         if (item.type === 'CONSULTA') {
             const data = item.data;
-            return \`
+            return `
                 <table style="width: 100%; border-collapse: collapse; margin-bottom: 10px;">
                     <tr>
-                        <td colspan="2" style="padding-bottom: 10px;"><strong>Motivo de Consulta:</strong> \${data.reason}</td>
+                        <td colspan="2" style="padding-bottom: 10px;"><strong>Motivo de Consulta:</strong> ${data.reason}</td>
                     </tr>
                     <tr>
                         <td colspan="2" style="background: #f8fafc; padding: 10px; border-radius: 4px; font-style: italic; margin-bottom: 10px; display: block;">
-                            <strong>Anamnesis:</strong><br>\${data.anamnesis || 'Sin datos'}
+                            <strong>Anamnesis:</strong><br>${data.anamnesis || 'Sin datos'}
                         </td>
                     </tr>
                 </table>
@@ -1165,87 +1167,88 @@ const ReportsPage = {
                 <h4 style="margin: 10px 0 5px 0; font-size: 14px; border-bottom: 1px solid #eee;">Examen Físico</h4>
                 <table style="width: 100%; font-size: 13px; margin-bottom: 10px;">
                     <tr>
-                        <td><strong>Temp:</strong> \${data.temperature || '-'} °C</td>
-                        <td><strong>FC:</strong> \${data.heartRate || '-'} lpm</td>
-                        <td><strong>FR:</strong> \${data.respiratoryRate || '-'} rpm</td>
-                        <td><strong>Peso:</strong> \${data.weight || '-'} kg</td>
+                        <td><strong>Temp:</strong> ${data.temperature || '-'} °C</td>
+                        <td><strong>FC:</strong> ${data.heartRate || '-'} lpm</td>
+                        <td><strong>FR:</strong> ${data.respiratoryRate || '-'} rpm</td>
+                        <td><strong>Peso:</strong> ${data.weight || '-'} kg</td>
                     </tr>
                     <tr>
-                        <td colspan="4"><strong>Cond. Corporal:</strong> \${data.bodyCondition || '-'} / 9</td>
+                        <td colspan="4"><strong>Cond. Corporal:</strong> ${data.bodyCondition || '-'} / 9</td>
                     </tr>
                 </table>
 
-                \${data.physicalExamFindings ? \`
+                ${data.physicalExamFindings ? `
                 <div style="margin-bottom: 10px;">
                      <strong>Hallazgos del Examen Físico:</strong><br>
-                     <p style="margin: 5px 0; white-space: pre-wrap;">\${data.physicalExamFindings}</p>
-                </div>\` : ''}
+                     <p style="margin: 5px 0; white-space: pre-wrap;">${data.physicalExamFindings}</p>
+                </div>` : ''}
 
-                \${data.paraclinicalExams ? \`
+                ${data.paraclinicalExams ? `
                 <div style="margin-bottom: 10px;">
                      <strong>Exámenes Paraclínicos:</strong><br>
-                     <p style="margin: 5px 0; white-space: pre-wrap;">\${data.paraclinicalExams}</p>
-                </div>\` : ''}
+                     <p style="margin: 5px 0; white-space: pre-wrap;">${data.paraclinicalExams}</p>
+                </div>` : ''}
 
                 <div style="background: #eff6ff; padding: 10px; border-left: 4px solid #2563eb; margin: 15px 0;">
-                    <strong>DIAGNÓSTICO:</strong> \${data.diagnosis || 'Reservado'}
+                    <strong>DIAGNÓSTICO:</strong> ${data.diagnosis || 'Reservado'}
                 </div>
 
-                \${data.treatmentPlan ? \`
+                ${data.treatmentPlan ? `
                 <div style="margin-bottom: 10px;">
                      <strong>Plan Terapéutico:</strong><br>
-                     <p style="margin: 5px 0; white-space: pre-wrap;">\${data.treatmentPlan}</p>
-                </div>\` : ''}
-                \${data.observations ? \`
+                     <p style="margin: 5px 0; white-space: pre-wrap;">${data.treatmentPlan}</p>
+                </div>` : ''}
+
+                ${data.observations ? `
                 <div style="margin-bottom: 10px; background: #fffbe6; padding: 10px; border-radius: 4px;">
                      <strong>Observaciones / Notas:</strong><br>
-                     <p style="margin: 5px 0; white-space: pre-wrap;">\${data.observations}</p>
-                </div>\` : ''}
-            \`;
+                     <p style="margin: 5px 0; white-space: pre-wrap;">${data.observations}</p>
+                </div>` : ''}
+            `;
         } else if (item.type === 'FÓRMULA MÉDICA') {
             const data = item.data;
             let medsHtml = '<table style="width: 100%; border-collapse: collapse; font-size: 13px;"><thead><tr style="background:#eee;"><th style="padding:5px; text-align:left;">Medicamento</th><th style="padding:5px; text-align:left;">Presentación</th><th style="padding:5px; text-align:left;">Dosis</th><th style="padding:5px; text-align:left;">Frecuencia</th><th style="padding:5px; text-align:left;">Duración</th></tr></thead><tbody>';
             data.medications.forEach(m => {
-                medsHtml += \`<tr>
-                    <td style="padding:5px; border-bottom:1px solid #eee;">\${m.name}</td>
-                    <td style="padding:5px; border-bottom:1px solid #eee;">\${m.presentation}</td>
-                    <td style="padding:5px; border-bottom:1px solid #eee;">\${m.dosage}</td>
-                    <td style="padding:5px; border-bottom:1px solid #eee;">\${m.frequency}</td>
-                    <td style="padding:5px; border-bottom:1px solid #eee;">\${m.duration}</td>
-                </tr>\`;
+                medsHtml += `<tr>
+                    <td style="padding:5px; border-bottom:1px solid #eee;">${m.name}</td>
+                    <td style="padding:5px; border-bottom:1px solid #eee;">${m.presentation}</td>
+                    <td style="padding:5px; border-bottom:1px solid #eee;">${m.dosage}</td>
+                    <td style="padding:5px; border-bottom:1px solid #eee;">${m.frequency}</td>
+                    <td style="padding:5px; border-bottom:1px solid #eee;">${m.duration}</td>
+                </tr>`;
             });
             medsHtml += '</tbody></table>';
 
-            return \`
-                \${medsHtml}
-                \${data.recommendations ? \`<div style="margin-top: 10px; padding: 10px; background: #fffbe6; border: 1px solid #ffe58f; border-radius: 4px;"><strong>Recomendaciones:</strong> \${data.recommendations}</div>\` : ''}
-            \`;
+            return `
+                ${medsHtml}
+                ${data.recommendations ? `<div style="margin-top: 10px; padding: 10px; background: #fffbe6; border: 1px solid #ffe58f; border-radius: 4px;"><strong>Recomendaciones:</strong> ${data.recommendations}</div>` : ''}
+            `;
         } else if (item.type === 'VACUNACIÓN') {
             const data = item.data;
-            return \`
+            return `
                 <table style="width: 100%;">
                     <tr>
-                        <td><strong>Vacuna:</strong> \${data.vaccineType || data.vaccineName}</td>
-                        <td><strong>Lote:</strong> \${data.batch || data.lotNumber || '-'}</td>
-                        <td><strong>Laboratorio:</strong> \${data.laboratory || '-'}</td>
+                        <td><strong>Vacuna:</strong> ${data.vaccineType || data.vaccineName}</td>
+                        <td><strong>Lote:</strong> ${data.batch || data.lotNumber || '-'}</td>
+                        <td><strong>Laboratorio:</strong> ${data.laboratory || '-'}</td>
                     </tr>
                     <tr>
-                        <td><strong>Fecha Aplicación:</strong> \${DataService.formatDate(data.applicationDate || data.date)}</td>
-                        <td><strong>Próxima Dosis:</strong> \${DataService.formatDate(data.nextDoseDate)}</td>
+                        <td><strong>Fecha Aplicación:</strong> ${DataService.formatDate(data.applicationDate || data.date)}</td>
+                        <td><strong>Próxima Dosis:</strong> ${DataService.formatDate(data.nextDoseDate)}</td>
                         <td></td>
                     </tr>
                 </table>
-            \`;
+            `;
         } else if (item.type === 'CIRUGÍA') {
             const data = item.data;
-            return \`
+            return `
                 <div>
-                    <strong>Procedimiento:</strong> \${data.type}<br>
-                    <strong>Estado:</strong> \${data.status}<br>
-                    \${data.preOpNotes ? \`<p><small><strong>Notas Pre-Op:</strong> \${data.preOpNotes}</small></p>\` : ''}
-                    \${data.procedure ? \`<p><small><strong>Detalle Procedimiento:</strong> \${data.procedure}</small></p>\` : ''}
+                    <strong>Procedimiento:</strong> ${data.type}<br>
+                    <strong>Estado:</strong> ${data.status}<br>
+                    ${data.preOpNotes ? `<p><small><strong>Notas Pre-Op:</strong> ${data.preOpNotes}</small></p>` : ''}
+                    ${data.procedure ? `<p><small><strong>Detalle Procedimiento:</strong> ${data.procedure}</small></p>` : ''}
                 </div>
-            \`;
+            `;
         }
         return '';
     },
@@ -1299,27 +1302,27 @@ const ReportsPage = {
 
         // Generate Title
         let title = 'Reporte de Desparasitación';
-        if (type !== 'all') title += \` (\${type === 'internal' ? 'Interna' : 'Externa'})\`;
-        if (startDate || endDate) title += \` [\${startDate || 'Inicio'} - \${endDate || 'Hoy'}]\`;
+        if (type !== 'all') title += ` (${type === 'internal' ? 'Interna' : 'Externa'})`;
+        if (startDate || endDate) title += ` [${startDate || 'Inicio'} - ${endDate || 'Hoy'}]`;
 
         // Generate Content
-        let html = \`<h3>Listado de Desparasitaciones</h3>\`;
+        let html = `<h3>Listado de Desparasitaciones</h3>`;
         html += '<table style="width:100%; border-collapse: collapse;"><thead><tr style="background:#f1f5f9;"><th style="padding:8px; text-align:left;">Fecha</th><th style="padding:8px; text-align:left;">Paciente</th><th style="padding:8px; text-align:left;">Producto</th><th style="padding:8px; text-align:left;">Tipo</th><th style="padding:8px; text-align:left;">Dosis</th><th style="padding:8px; text-align:left;">Próxima</th></tr></thead><tbody>';
 
         const rows = await Promise.all(filtered.map(async r => {
             const patient = await DataService.getPatientById(r.patient_id || r.patientId);
-            return \`<tr>
-                <td style="padding:8px; border-bottom:1px solid #eee;">\${DataService.formatDate(r.date)}</td>
-                <td style="padding:8px; border-bottom:1px solid #eee;">\${patient ? patient.name : '-'}</td>
-                <td style="padding:8px; border-bottom:1px solid #eee;">\${r.product}</td>
-                <td style="padding:8px; border-bottom:1px solid #eee;">\${r.type === 'internal' ? 'Interna' : 'Externa'}</td>
-                <td style="padding:8px; border-bottom:1px solid #eee;">\${r.dose}</td>
-                <td style="padding:8px; border-bottom:1px solid #eee;">\${DataService.formatDate(r.next_dose_date || r.nextDoseDate)}</td>
-            </tr>\`;
+            return `<tr>
+                <td style="padding:8px; border-bottom:1px solid #eee;">${DataService.formatDate(r.date)}</td>
+                <td style="padding:8px; border-bottom:1px solid #eee;">${patient ? patient.name : '-'}</td>
+                <td style="padding:8px; border-bottom:1px solid #eee;">${r.product}</td>
+                <td style="padding:8px; border-bottom:1px solid #eee;">${r.type === 'internal' ? 'Interna' : 'Externa'}</td>
+                <td style="padding:8px; border-bottom:1px solid #eee;">${r.dose}</td>
+                <td style="padding:8px; border-bottom:1px solid #eee;">${DataService.formatDate(r.next_dose_date || r.nextDoseDate)}</td>
+            </tr>`;
         }));
 
         html += rows.join('') + '</tbody></table>';
-        html += \`<p><strong>Total Registros:</strong> \${filtered.length}</p>\`;
+        html += `<p><strong>Total Registros:</strong> ${filtered.length}</p>`;
 
         this.generatePDF(title, html);
         this.closeDewormingFilterModal();
@@ -1391,7 +1394,7 @@ const ReportsPage = {
         }
 
         // Generate HTML
-        let html = \`<h3>Reporte de Controles (\${statusFilter === 'all' ? 'Todos' : (statusFilter === 'expired' ? 'Vencidos' : 'Próximos')})</h3>\`;
+        let html = `<h3>Reporte de Controles (${statusFilter === 'all' ? 'Todos' : (statusFilter === 'expired' ? 'Vencidos' : 'Próximos')})</h3>`;
         html += '<table style="width:100%; border-collapse: collapse;"><thead><tr style="background:#f1f5f9;"><th style="padding:8px; text-align:left;">Fecha Control</th><th style="padding:8px; text-align:left;">Paciente</th><th style="padding:8px; text-align:left;">Propietario</th><th style="padding:8px; text-align:left;">Teléfono</th><th style="padding:8px; text-align:left;">Medicamentos</th><th style="padding:8px; text-align:left;">Veterinario</th></tr></thead><tbody>';
 
         const rows = await Promise.all(reportData.map(async item => {
@@ -1403,18 +1406,18 @@ const ReportsPage = {
             const isExpired = item.objDate < today;
             const style = isExpired ? 'color: #ef4444; font-weight: bold;' : 'color: #22c55e;';
 
-            return \`<tr>
-                <td style="padding:8px; border-bottom:1px solid #eee; \${style}">\${DataService.formatDate(item.date)} \${isExpired ? '(Vencido)' : ''}</td>
-                <td style="padding:8px; border-bottom:1px solid #eee;">\${patient ? patient.name : '-'}</td>
-                <td style="padding:8px; border-bottom:1px solid #eee;">\${owner ? owner.full_name || owner.fullName : '-'}</td>
-                <td style="padding:8px; border-bottom:1px solid #eee;">\${owner ? owner.phone : '-'}</td>
-                <td style="padding:8px; border-bottom:1px solid #eee;">\${item.reason}</td>
-                <td style="padding:8px; border-bottom:1px solid #eee;">\${vet ? vet.full_name || vet.name : '-'}</td>
-            </tr>\`;
+            return `<tr>
+                <td style="padding:8px; border-bottom:1px solid #eee; ${style}">${DataService.formatDate(item.date)} ${isExpired ? '(Vencido)' : ''}</td>
+                <td style="padding:8px; border-bottom:1px solid #eee;">${patient ? patient.name : '-'}</td>
+                <td style="padding:8px; border-bottom:1px solid #eee;">${owner ? owner.full_name || owner.fullName : '-'}</td>
+                <td style="padding:8px; border-bottom:1px solid #eee;">${owner ? owner.phone : '-'}</td>
+                <td style="padding:8px; border-bottom:1px solid #eee;">${item.reason}</td>
+                <td style="padding:8px; border-bottom:1px solid #eee;">${vet ? vet.full_name || vet.name : '-'}</td>
+            </tr>`;
         }));
 
         html += rows.join('') + '</tbody></table>';
-        html += \`<p><strong>Total Registros:</strong> \${reportData.length}</p>\`;
+        html += `<p><strong>Total Registros:</strong> ${reportData.length}</p>`;
 
         this.generatePDF('Reporte de Controles', html);
         this.closeControlsFilterModal();
