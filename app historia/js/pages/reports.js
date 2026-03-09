@@ -1427,9 +1427,3 @@ const ReportsPage = {
         // No hay eventos especiales necesarios
     }
 };
-
-
-
-
-
-
