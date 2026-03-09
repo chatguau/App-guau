@@ -996,14 +996,6 @@ const ReportsPage = {
         const patients = filteredData || await DataService.getPatients() || [];
         let html = '<h3>Listado de Pacientes</h3>';
 
-```
-Viewed reports.js:1001-1200
-
-**Parte 6 (Líneas 1001 a 1200)**. 
-
-Pégalo debajo de la parte anterior. Dime "Siguiente" para enviarte la última parte.
-
-```javascript
         if (patients.length === 0) {
             return html + '<p>No se encontraron registros.</p>';
         }
@@ -1444,6 +1436,7 @@ Pégalo debajo de la parte anterior. Con esto terminas de reemplazar todo el arc
         // No hay eventos especiales necesarios
     }
 };
+
 
 
 
