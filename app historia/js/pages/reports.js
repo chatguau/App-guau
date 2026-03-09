@@ -1197,14 +1197,6 @@ const ReportsPage = {
                      <p style="margin: 5px 0; white-space: pre-wrap;">\${data.treatmentPlan}</p>
                 </div>\` : ''}
 ```
-Viewed reports.js:1201-1433
-
-**Parte 7 (Final - Líneas 1201 a 1433)**.
-
-Pégalo debajo de la parte anterior. Con esto terminas de reemplazar todo el archivo [js/pages/reports.js](cci:7://file:///c:/Users/fainm/Desktop/Fain%20asus/app%20historia/js/pages/reports.js:0:0-0:0). 
-
-```javascript
-
                 \${data.observations ? \`
                 <div style="margin-bottom: 10px; background: #fffbe6; padding: 10px; border-radius: 4px;">
                      <strong>Observaciones / Notas:</strong><br>
@@ -1436,6 +1428,7 @@ Pégalo debajo de la parte anterior. Con esto terminas de reemplazar todo el arc
         // No hay eventos especiales necesarios
     }
 };
+
 
 
 
