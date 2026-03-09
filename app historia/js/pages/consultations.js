@@ -640,10 +640,10 @@ const ConsultationsPage = {
             localStorage.removeItem('autoOpenConsultation');
             localStorage.removeItem('autoSelectPatientId');
 
-            setTimeout(() => {
+            setTimeout(async () => {
                 this.openNewConsultationModal();
                 if (autoPatientId) {
-                    this.selectPatient(autoPatientId);
+                    await this.selectPatient(autoPatientId);
                     this.nextStep(); // Ir al paso de datos clínicos
                 }
             }, 100);
@@ -787,8 +787,10 @@ const ConsultationsPage = {
 
 
 
-    selectPatient(patientId) {
-        this.selectedPatient = DataService.getPatientById(patientId);
+    async selectPatient(patientId) {
+        document.getElementById('selectedPatientCard').innerHTML = '<div style="padding: 10px; text-align: center;">⏳ Cargando detalles...</div>';
+
+        this.selectedPatient = await DataService.getPatientById(patientId);
 
         // Marcar seleccionado
         document.querySelectorAll('.patient-select-item').forEach(item => {
@@ -799,7 +801,7 @@ const ConsultationsPage = {
         });
 
         // Actualizar card del paciente seleccionado
-        const owner = DataService.getOwnerById(this.selectedPatient.ownerId);
+        const owner = await DataService.getOwnerById(this.selectedPatient.owner_id || this.selectedPatient.ownerId);
         const emoji = DataService.getSpeciesEmoji(this.selectedPatient.species);
 
         document.getElementById('selectedPatientCard').innerHTML = `
@@ -807,7 +809,7 @@ const ConsultationsPage = {
                 <div class="patient-avatar-sm">${emoji}</div>
                 <div>
                     <div class="patient-name-sm">${this.selectedPatient.name}</div>
-                    <div class="patient-owner-sm">${owner ? owner.fullName : ''} • ${this.selectedPatient.breed}</div>
+                    <div class="patient-owner-sm">${owner ? owner.full_name || owner.fullName : ''} • ${this.selectedPatient.breed}</div>
                 </div>
                 <span class="badge badge-success">✓ Seleccionado</span>
             </div>
