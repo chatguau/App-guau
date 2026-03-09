@@ -796,16 +796,6 @@ const ReportsPage = {
 
         // Consultas
         const consultations = DataService.getConsultationsByPatient(patientId);
-```
-Viewed reports.js:801-1000
-
-Sharing the fixed [reports.js](cci:7://file:///c:/Users/fainm/Desktop/Fain%20asus/app%20historia/js/pages/reports.js:0:0-0:0) file with the user in parts as requested.
-
-**Parte 5 (Líneas 801 a 1000)**. 
-
-Pégalo debajo de la parte anterior. Dime "Siguiente" para enviarte la parte 6.
-
-```javascript
         consultations.forEach(c => {
             timeline.push({
                 date: c.date,
@@ -1454,5 +1444,6 @@ Pégalo debajo de la parte anterior. Con esto terminas de reemplazar todo el arc
         // No hay eventos especiales necesarios
     }
 };
+
 
 
