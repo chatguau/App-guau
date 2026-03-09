@@ -164,8 +164,6 @@ const ConsultationsPage = {
                             <div class="patient-select-list" id="patientSelectList">
                                 <!-- Cargado dinámicamente -->
                             </div>
-
-                            </div>
                         </div>
 
                         <!-- Step 2: Motivo y Anamnesis -->
