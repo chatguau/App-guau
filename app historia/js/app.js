@@ -31,9 +31,9 @@ const App = {
      * Configura la navegación del sidebar
      */
     setupNavigation() {
-        const user = DataService.getCurrentUser();
-        // Restore localStorage support for the toggle button
-        const role = localStorage.getItem('demo_role') || user?.role || 'admin';
+        const vet = Auth.currentVeterinarian;
+        // Asume 'veterinarian' si no hay un rol explícito o si no es el admin principal
+        const role = vet?.role || 'veterinarian';
         console.log('Navigation Setup - Active Role:', role);
 
         document.querySelectorAll('.nav-item').forEach(item => {
@@ -251,5 +251,11 @@ const App = {
 
 // Iniciar aplicación cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', () => {
-    App.init();
+    // Inicializar primero la Autenticación
+    if (typeof Auth !== 'undefined' && typeof Auth.init === 'function') {
+        Auth.init();
+    } else {
+        // Fallback si no hay autenticación
+        App.init();
+    }
 });
