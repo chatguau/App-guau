@@ -1196,7 +1196,6 @@ const ReportsPage = {
                      <strong>Plan Terapéutico:</strong><br>
                      <p style="margin: 5px 0; white-space: pre-wrap;">\${data.treatmentPlan}</p>
                 </div>\` : ''}
-```
                 \${data.observations ? \`
                 <div style="margin-bottom: 10px; background: #fffbe6; padding: 10px; border-radius: 4px;">
                      <strong>Observaciones / Notas:</strong><br>
@@ -1428,6 +1427,7 @@ const ReportsPage = {
         // No hay eventos especiales necesarios
     }
 };
+
 
 
 
