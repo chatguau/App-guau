@@ -596,16 +596,6 @@ const ReportsPage = {
 
             // Fecha
             if (startDate && cDate < startDate) matches = false;
-```
-            Viewed reports.js:601-800
-
-Sharing the fixed [reports.js](cci:7://file:///c:/Users/fainm/Desktop/Fain%20asus/app%20historia/js/pages/reports.js:0:0-0:0) file with the user in parts as requested.
-
-**Parte 4 (Líneas 601 a 800)**. 
-
-Pégalo debajo de la parte anterior. Dime "Siguiente" para enviarte la parte 5.
-
-```javascript
             if (endDate && cDate > endDate) matches = false;
 
             // Diagnóstico
@@ -1464,4 +1454,5 @@ Pégalo debajo de la parte anterior. Con esto terminas de reemplazar todo el arc
         // No hay eventos especiales necesarios
     }
 };
+
 
